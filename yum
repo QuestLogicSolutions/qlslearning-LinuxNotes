@@ -1,0 +1,240 @@
+yum
+What is yum?
+
+Yellowdog Updater, Modified is an open-source command-line package-management utility for Linux operating systems using the RPM Package Manager. Several other tools provide graphical user interfaces to yum functionality. Yum allows automatic updates, package and dependency management, on RPM-based distributions. yum works with software repositories (collections of packages), which can be accessed locally[4] or over a network connection.
+
+yum - Yellowdog Updater, Modified
+
+YUM configuration files are:
+    /etc/yum.conf
+    /etc/yum.repos.d/
+    /var/cache/yum/
+
+
+
+Install an application without prompting:
+  # yum install ntp -y        <-- -y flag means install without asking me. Just install it.
+
+
+
+Install a package called Firefox:
+  # yum install firefox
+
+
+Remove a package completely with their all dependencies:
+  # yum remove firefox
+
+
+
+Update MySQL package to the latest stable version:
+  # yum update mysql    <-- automatically resolves all dependencies issues and installs them.
+
+
+Search for the specific package with name:
+  # yum list openssh
+  # yum list openssh-4.3p2    <--   For more acuracy, define package name with their version,
+
+
+
+Search all the available packages to match the name of the package you specified in case you don’t remember the exact name of the package:
+  # yum search vsftpd
+
+
+Get information of a package:
+  # yum info firefox
+
+
+
+List all the available packages in the Yum database:
+  # yum list | less
+
+
+List all the installed packages on a system:
+  # yum list installed | less
+
+
+List installed packages:
+  # rpm -qa  <-- query/verify/list all packages
+  # rpm -qac <-- '-c' list all configuration files
+  # rpm -qal <-- '-l' list files in package
+  # yum list installed
+
+
+
+
+
+Find which package a specific file belongs to:
+  # yum provides /etc/httpd/conf/httpd.conf
+
+
+
+
+check if packages on your system have updates available:
+  # yum check-update
+
+
+
+Install all latest patches and security updates to your system.
+  # yum update
+
+
+
+
+List all the available groups:
+  # yum grouplist
+
+
+
+Install a particular package group, use groupinstall:
+  # yum groupinstall 'MySQL Database'
+
+
+Update any existing installed group packages:
+  # yum groupupdate 'DNS Name Server'
+
+
+
+Delete or remove any existing installed group from the system:
+  # yum groupremove 'DNS Name Server'
+
+
+
+List all enabled Yum repositories in your system:
+  # yum repolist
+
+
+Display all enabled and disabled yum repositories on the system.
+  # yum repolist all
+
+Enable/Disable a repository:
+  # yum repolist enabled/disabled
+
+Install a particular package from a specific enabled or disabled repository
+  # yum --enablerepo=epel install phpmyadmin    <-- must use –enablerepo
+
+
+yum keeps all the repository enabled package data in /var/cache/yum/ with each sub-directory, to clean all cached files from enabled repository:
+  # yum clean all
+
+
+Update the YUM package repository cache with the following command:
+    # sudo yum makecache
+
+
+
+
+
+
+##YUM TRANSACTIONS
+* YUM transactions are saved in /tmp/ as yum_save_tx.2018-03-02.12-34*.yumtx files and can be resumed, thus installed, w/ the 'yum-load-transaction' command.
+
+Resume the transaction:
+  # yum load-transaction /tmp/yum_save_tx.2018-03-02.12-34.RZUTa5.yumtx
+
+
+How to view a full history of YUM transactions?
+  # yum history
+
+
+
+
+############################################################################################################
+############################################################################################################
+
+
+
+
+
+# yum history sub-commands:
+*list,
+*info,
+*summary,
+*repeat,
+*redo, repeat the work of a specified transaction
+*undo, will undo a specified transaction.
+new, to set a new history file
+rollback, will undo all transactions up to the point of the specified transaction.
+addon,
+addon-info, will provide sources of additional information.
+stats, displays statistics about the current history DB
+statistics,
+sync, enables us to alter the the rpmdb/yumdb data stored for any installed packages.
+synchronizepkg,
+pkgs,
+pkg-list, print out transaction details of a specific package or group of packages
+pkgs-list,
+package,
+package-list, print out transaction details of a specific package or group of packages
+packages,
+packages-list,
+pkg-info, print out transaction details of a specific package or group of packages
+pkgs-info,
+package-info, print out transaction details of a specific package or group of packages
+packages-info
+
+
+
+
+
+############################################################################################################
+############################################################################################################
+
+
+
+
+
+Configure Yum Repository
+
+    Prerequisites before setting up yum repository:
+    If Centos CD is visible proceed to next perquisite
+
+
+    If Centos is not visible click the cd above the envelope >CD/DVDdrive1> Connect to Iso Image on data store. Click on Centos > Okay
+
+
+    2. # vi /etc/sysconfig/network-scripts/ifcfg-eth0
+
+    DNS and gateway must be set to these numbers
+    DNS1=192.168.1.1
+    	Gateway=192.168.1.1
+
+    # service network restart
+
+    Setting up yum repository
+    Make directory for all repodata/repository
+    # mkdir /packages
+
+    Copy all data from ISO
+    #  cp -var /media/CentOS_6.5_Final/* /packages
+
+    Migrate to Yum main configuration directory
+    # cd /etc/yum.repos.d/
+    # vi media.repo ( every repo has to be give the .repo extension )
+
+
+
+
+    Gpgcheck = if yum should check for signature check on packages.
+    Baseurl = url to the directory where the repodata directory of a repository is located.
+    Enable = to ignore current repository or not
+
+
+    # yum clean all (Clean all cached files from any enabled repository. Useful to run from time to time to make sure there is nothing using unnecessary space )
+
+    # yum repolist (will display only the enabled repositories )
+
+
+
+    If you see 6,518 in the CentOS – Base Column
+
+    YOU HAVE COMPLETE YUM REPOSITORY
+
+
+
+############################################################################################################################################################################################################################
+############################################################################################################################################################################################################################
+
+
+Everytime you run yum install, what gets created?
+
+  When you run yum command, to install the daemon, it creates the file, the directory of the application, and the user that will run the process behind the scene.
