@@ -238,3 +238,8 @@ Configure Yum Repository
 Everytime you run yum install, what gets created?
 
   When you run yum command, to install the daemon, it creates the file, the directory of the application, and the user that will run the process behind the scene.
+  
+  
+
+https://www.tecmint.com/view-yum-history-to-find-packages-info/
+  
