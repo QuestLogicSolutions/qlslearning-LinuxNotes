@@ -1,0 +1,17 @@
+mv simply changes the name of the file (it can also move it to another filesystem or path). You give it an old name and a new name, and it changes the file to the new name or location.
+
+rename is used to make bulk naming changes.
+
+Say you had a thousand files, foo000.log through foo999.log and you wanted to change them to bar000.log through bar999.log. With mv you'd have to do mv foo000.log bar000.log, mv foo001 bar001.log, etc. or else write a script. With rename you simply do rename foo bar foo*.log, and voila, a thousand files are changed in an instant! Pretty cool. Check out the man rename page again for details.
+
+EXAMPLE:
+For example rename all *.bak file as *.txt, enter:
+$ rename .bak .txt *.bak
+
+
+
+MV Command
+
+Rename fileA to fileB. -i options prompt before overwrite. Ask for confirmation if exist already.
+
+# mv -i fileA fileB
