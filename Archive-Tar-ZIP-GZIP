@@ -1,0 +1,144 @@
+
+Archives (tar and zip, gzip )
+
+An archive is a single file that contains any number of individual files plus information to allow them to be restored to their original form by one or more extraction programs.
+
+Archives are convenient for storing files. They allow the directory tree directory structure (i.e., hierarchy of directories) in which the files were originally contained to be maintained.
+Archives are also convenient for transmitting data and distributing programs. Most software distributed over the Internet is distributed as an archive that contains all related files as well as documentation.
+
+
+Archives are easier to deal with than large numbers of individual files. For example, it is a simple matter to compress an archive in order to reduce its size and transmission time and then decompress it after receipt. Also, it is possible to read, extract or insert individual files into an archive without first restoring all of the contents of the archive to their original form. Moreover, large archives can easily be split into segments for such purposes as sending as e-mail attachments or storing on floppy disks, even if they have been compressed, and they can later be reassembled without compromising the integrity of the data.
+
+
+
+
+ZIP :
+
+The Zip file format is a data compression and archive format. It is used to reduce the size of original data.
+It contains one or more than one files that have been compressed to reduce the size of the file. Zipping a file means that you are reducing the size of your original data into small size. The zipped version of the file has a .zip extension
+
+The command zip is to compress file in one place if you need some space to work.
+To compress:
+  $ zip file.zip file1 file2 file3
+
+To list compressed/zipped file:
+  # unzip –l file.zip
+
+To uncompressed:
+  # unzip file.zip
+
+
+
+TAR
+
+On its own a TAR file is not a compressed file, it is simply a format used for archiving files (merging several files into one). On Unix and Linux archiving and compression are normally done by two separate utilities.
+
+TAR files are the most popular form of archive used on a Unix system. TAR actually stands for tape archive, and is the name of the type of file, and also the name of a utility which can be used to open these files.
+The format was originally designed for backup purposes using tapes, however it is quite often used for downloads and application packages. It enables you to put a number of files together into one single file, which makes it much easier to either archive the files, or distribute them.
+
+Tar: It is very easy to compress a Whole Linux/UNIX directory. It is useful to backup files, email all files, or even to send software you have created to friends. Technically, it is called as a compressed archive. GNU tar command is best for this work. It can be use on remote Linux or UNIX server. It does two things for you:
+
+=> Create the archive
+=> Compress the archive
+
+You need to use tar command as follows (syntax of tar command):
+  $ tar -zcvf archive-name.tar.gz directory-name
+      Where,
+        -z: Compress archive using gzip program
+        -c: Create archive
+        -v: Verbose i.e display progress while creating archive
+        -f: Archive File name
+        -x: extract tar file
+        -t : to view tar
+
+
+To Tar a Directory :
+  $ tar –cvf tarexample.tar Documents
+
+
+To view tar file :
+  $ tar –tvf tarexample.tar
+
+
+To extract tar file:
+  $ tar –xvf tarexample.tar
+
+By default tar is not a compression method and will have to use gzip to compress a tar file :
+
+
+
+GZIP
+
+To compress tar file :
+  $ gzip tarexample.tar
+
+To uncompress gzip :
+  $ gunzip tarexample.tar.gz
+
+
+
+
+
+
+
+
+
+
+To create a tar file:
+# tar -cvf filename.tar file1 file2 file3
+
+To list contents of a tar file:
+# tar -tvf filename.tar
+
+To extract contents of a tar file:
+# tar -xvf tarfilename.tar
+
+Compress tar file:
+# gzip tarfilename.tar.gz
+
+Uncompress zipped tar file:
+# gunzip tar.gz filename
+
+
+TAR Flags:
+[A]ppend tar files to an archive
+[c]reate new archive
+[d]ifference between archive and file system
+--delete - delete from the archive
+[f] - archive filename
+[p]reserve all permission about the file(s)
+[r] - append files to the end of archive
+[t] - list the contents of an archive
+[v]erbose
+[z] - gzip/compress newly created archive
+
+
+*tar just bundles files together.
+*zip applies compression as well. Use gzip to compress the tarball.
+*cpio - copy files to and from archives. This will always preserve the permissions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+TAR.GZ
+
+This format is my weapon of choice for most compression. It gives very good compression while not utilizing too much of the CPU while it is compressing the data. To compress a directory use the following syntax:
+
+# tar -zcvf archive_name.tar.gz directory_to_compress
+
+To decompress an archive use the following syntax:
+
+# tar -zxvf archive_name.tar.gz
+
+This will extract the files in the archive_name.tar.gz archive in the current directory. Like with the tar format you can optionally extract the files to a different directory:
+
+# tar -zxvf archive_name.tar.gz -C /tmp/extract_here/
