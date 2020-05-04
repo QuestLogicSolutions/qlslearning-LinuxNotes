@@ -1,0 +1,208 @@
+Account Management
+
+There are three types of user in linux: - root, regular and service.
+
+Username is flexible. It can be changed as per requirement. Regardless it is selected first time or changed later; it must be unique in system. Two users can’t use the same username.
+
+UID is fixed. It cannot be changed. Once assigned, it always remains the same for that user account.
+
+Original file name	  passwd	shadow	group	   gshadow
+Backup file name	    passwd-	shadow-	group-	 gshadow-
+
+
+
+# cat /etc/passwd
+The full account info is stored in /etc/passwd in the following format:
+[username]:[x]:[UID]:[GID]:[Comment]:[Home directory]:[default shell]
+x indicates that the account is protected by a shadow password.
+
+# cat /etc/groups
+[GroupName]:[GroupPasswd]:[GID]:[GroupMembers]
+x in GroupPasswd indicates group password isn't being used.
+Group members are listed in a comma separated value
+
+# cat /etc/shadow <-- contains password and account expiration info. Looks like this:
+angounou:$6$LO9kLqbW$nbGoavA.tU172TQ.8IZBRg/hY7MaEcAAhkRc4JnSfDhWeX7A5VFKAfSBS729jZdgVqVktsmR0KfuzMZ346I3R1:18185:0:99999:7:::
+- username
+- encrypted password
+- # of days since 01/01/1970 since passwd was last changed
+- # of days before password can be changed. 0 means it can be changed anytime.
+- # of days after which password must be changed. 99999 means it can be unchaged for a long time
+- # of days to warn user of expiring password. 7 for a full week.
+- # of days after password expires that acct is disabled
+- reserved for possible future use
+
+
+# id - display user and group ID
+# useradd, usermod, userdel - add, modify, delete user accounts
+# groupadd, groupmod, groupdel - add modify, delete groups
+# gpasswd - utility for administering /etc/group config file
+# pwck, grpck - utilities to manage verification of password, group & associated shadow files
+# pmconv, pwuconv - convert password to shadow passwords and vice versa
+# grpconv, grpunconv - convert shadowed info for group accounts
+
+
+After a user account is created, the useradd command kicks off the following:
+1) home directory is created in /home/username (this is the default location)
+2) hidden files are copied into user's home directory to provide environmental variables
+  - .bash_logout
+  - .bash_profile
+  - .bashrc - created in user's home directory
+3) a mail spool is created at /var/spool/mail/username
+4) a group is created w/ the same name as he user account
+
+
+
+
+Delete a user account:
+# userdel username
+    *does the home directory get deleted also?
+
+Delete user account and directory
+# userdel -r username
+
+View info about user account
+# chage -l username
+
+Get more into about "chage" command
+# chage --help
+
+
+
+
+Groups:
+
+REVIEW * vi /etc/group
+    view group information. Ignore the ‘x’ since it’s no longer used
+
+groupadd groupName
+Creating groups
+
+* use the tail command to view the last 10 lines of /etc/group
+
+* use the id command to details about a user account
+
+usermod -aG groupname username
+Add user to group
+
+gpasswd -d user group
+Remove user from group
+
+groupdel groupname
+Delete group
+
+
+
+Permissions:
+ls -l
+view file and folder permissions (image)
+view permission using stat command (stat)
+
+chmod 777 filename
+change permissions (change permission)
+
+chown -R ownerName fileName (link)
+change file owner
+
+
+chown -R :groupName fileName (link)
+change file group
+
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+
+
+Remove a user from a group:
+# gpasswd -d user group
+
+
+USERMOD Command:
+
+Add a user to a group:
+# usermod -aG groupname username
+
+
+Adding comment to a user account:
+# usermod -c "Add Comment" username
+
+
+Change a user's home directory:
+# usermod -d /var/www/ username
+
+
+Set user account expiration date:
+# usermod -e 2014-25-05 username
+
+
+View user's account expiration date:
+# chage -l username
+
+
+Change user's primary group:
+# usermod -g primarygroupname username
+
+
+Change user's login name:
+# usermod -l newUsername oldUsername
+
+
+Lock user's account:
+# usermod -L username
+
+
+Unlock user's account:
+# usermod -U username
+
+
+Move current home directory ‘/home/pinky‘ to new location ‘/var/pinky‘:
+# usermod -d /var/pinky/ -m pinky
+
+
+Change user's shell:
+# usermod -s /bin/sh username
+
+
+See and Change UserID (UID)
+# id username
+# usermod -u 888 username
+
+
+Change UserID (UID) and GID of user:
+# usermod -u 666 -g 777 username
+
+
+Modify a user's account with multiple options:
+# usermod -d /var/www/html/ -s /bin/bash -e 2014-12-10 -c "This is Jack" -u 555 -aG apple jack
+
+
+Usermod options:
+  -c, --comment COMMENT         new value of the GECOS field
+  -d, --home HOME_DIR           new home directory for the user account
+  -e, --expiredate EXPIRE_DATE  set account expiration date to EXPIRE_DATE
+  -f, --inactive INACTIVE       set password inactive after expiration
+                                to INACTIVE
+  -g, --gid GROUP               force use GROUP as new primary group
+  -G, --groups GROUPS           new list of supplementary GROUPS
+  -a, --append                  append the user to the supplemental GROUPS
+                                mentioned by the -G option without removing
+                                the user from other groups
+  -h, --help                    display this help message and exit
+  -l, --login NEW_LOGIN         new value of the login name
+  -L, --lock                    lock the user account
+  -m, --move-home               move contents of the home directory to the
+                                new location (use only with -d)
+  -o, --non-unique              allow using duplicate (non-unique) UID
+  -p, --password PASSWORD       use encrypted password for the new password
+  -R, --root CHROOT_DIR         directory to chroot into
+  -P, --prefix PREFIX_DIR       prefix directory where are located the /etc/* files
+  -s, --shell SHELL             new login shell for the user account
+  -u, --uid UID                 new UID for the user account
+  -U, --unlock                  unlock the user account
+  -v, --add-subuids FIRST-LAST  add range of subordinate uids
+  -V, --del-subuids FIRST-LAST  remove range of subordinate uids
+  -w, --add-subgids FIRST-LAST  add range of subordinate gids
+  -W, --del-subgids FIRST-LAST  remove range of subordinate gids
+  -Z, --selinux-user SEUSER     new SELinux user mapping for the user account
+
+--------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
