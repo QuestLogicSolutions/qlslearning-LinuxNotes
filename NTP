@@ -76,4 +76,38 @@ See where time is pulling from:
   # ntpq -p
 
 
+Set date from the command line:
+  # date +%Y%m%d -s "20120418"
+
+Set time from the command line:
+  # date +%T -s "11:14:00"
+
+Set time and date from the command line
+  # date -s "19 APR 2012 11:14:00"
+
+Linux check date from command line
+  # date
+
+
+Set hardware clock
+
+The hardware clock is the clock that runs in you PC hardware even if you disconnect it from the main power supply. This is because it has a lithium battery in the modern computers and another type of battery in the old ones.
+
+Show hardware clock:
+  # hwclock --show
+  
+
+Let's set the hardware clock to local time:
+  # hwclock --set --date="2012-04-19 16:45:05" --localtime
+
+ 
+ 
+Update from the command line against a time server
+
+You can update the clock manually, without the need of the daemon with ntpdate
+  # ntpdate 129.6.15.28
+  
+  
+
+
 
