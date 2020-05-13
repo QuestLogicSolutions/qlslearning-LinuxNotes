@@ -9,10 +9,11 @@ It is used to synchronize the time on your Linux system with a centralized NTP s
 NTP - Network Time Protocol
 What port does NTP use? TCP 123
 
-SYNTAX :
-scp options source destination
 
-Option :
+Get list if ntpd flags:
+  # ntpd --help | less
+
+Options :
       -p  Process priority
       -i  Jail directory
 
@@ -69,6 +70,9 @@ Option :
   jitter -
 
 
+IBURST sends a burst of eight packets when the server is unreachable (tries to find out if a host is reachable), and then shorten the time until the first sync. We specify the NTP IBURST for faster clock synchronization. This option is considered “aggressive” by some public NTP servers. If an NTP server is unresponsive, the IBURST mode continues to send frequent queries until the server responds and time synchronization starts.
+
+
 ############################################################################################################################################################################################################################
 
 
@@ -106,12 +110,7 @@ Update from the command line against a time server
 
 You can update the clock manually, without the need of the daemon with ntpdate
   # ntpdate 129.6.15.28
-  
-  
-  
-  
-  
-  
+  # ntpdate pool.ntp.org
   
   
   
