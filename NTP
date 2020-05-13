@@ -1,0 +1,79 @@
+NTP
+What is NTP?
+
+Network Time Protocol (NTP) - is a networking protocol used for time synchronization between a client server and centralized time server.
+
+It is used to synchronize the time on your Linux system with a centralized NTP server. The reason why we use NTP servers is because time accuracy degrades when using an Internet Time Server because of asymmetrical latency (delays between  when the time packets leave the time source and when they arrive at your network ).
+
+
+NTP - Network Time Protocol
+What port does NTP use? TCP 123
+
+SYNTAX :
+scp options source destination
+
+Option :
+      -p  Process priority
+      -i  Jail directory
+
+
+
+
+
+  ################################################################################
+                            HOW TO CONFIGURE NTP
+
+1) Install the NTP daemon/service.
+    # yum install ntp -y
+
+2) Start the ntp service
+    # service ntpd start
+    # chkconfig ntpd on
+
+3) open tcp and udp ports 123
+    # iptables -I INPUT -p tcp --dport 123 -j ACCEPT
+    # iptables -I INPUT -p udp --dport 123 -j ACCEPT
+    # service iptables save
+    # service iptables restart
+
+4) update ntp .conf file:
+    # vi /etc/ntp.conf
+    # service ntpd restart
+
+5) validate server's time spacing
+    # ntpq -p
+
+6) query ntp with specific server
+    # ntpdate -q x.x.x.x (e.g pool.ntp.org)
+
+7) update ntp with a specific server
+    # ntpdate -u 192.128.1.229
+
+
+
+
+  Important terms to know:
+
+  iburst:
+
+  * NOTE: the terms below appear when running ntpq -p.
+  remote -
+  refid -
+  st -
+  t -
+  when -
+  poll -
+  reach -
+  delay -
+  offset -
+  jitter -
+
+
+############################################################################################################################################################################################################################
+
+
+See where time is pulling from:
+  # ntpq -p
+
+
+
