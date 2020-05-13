@@ -108,6 +108,25 @@ You can update the clock manually, without the need of the daemon with ntpdate
   # ntpdate 129.6.15.28
   
   
+  
+  
+  
+  
+  
+  
+  
+In NTP hierarchy, Stratum-0 level device has the most precise time, Since Stratum-1 NTP Server is synchronizing its time from Stratum-0 time device, Stratum-1 is less precise than Stratum-0 and so on.
+
+NTP Stratum levels up to 15 are valid Stratum Levels. In Network Time Protocol (NTP), Stratum-16 is used to indicate that a device time is not synchronized.
+
+
+
+What is NTP Server Stratum?
+https://www.worldtimesolutions.com/support/ntp/What_is_NTP_server_stratum.html
+
+
+What’s the Difference Between the Four Stratum Levels?
+https://www.mwrf.com/technologies/systems/article/21849619/whats-the-difference-between-the-four-stratum-levels
 
 
 
