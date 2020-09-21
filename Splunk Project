@@ -1,0 +1,139 @@
+
+
+
+
+
+Franck Yannick Kengne Djomo 
+Professor Alex Ngounou 
+ Splunk 
+September 2020
+
+
+
+
+
+
+
+
+
+Table of Contents
+
+Introduction…………………………………………………………………………………….....1
+Project Structure………………………………………………………………………………….2
+Why Splunk?......................................3
+Splunk roles and responsibilities…………………………………………4
+Splunk registration process……………………………………………………….5
+Splunk Installation…………………………………………………………………………….6
+Understanding Splunk SPL…………………………………………………………………7
+Ingest Logs for monitoring………………………………………………….…….8
+Dasboards……………………………………………………………………………………….......9
+Reports………………………………………………………………………………………….......10
+Summary………………………………………………………………………………………........11
+Other features that splunk can do…………………………………..12
+Conclusion……………………………………………………………………………………......13
+
+
+
+
+
+
+Introduction
+	Data without context is useless if one does not know how to gain insight from said data, to make informed business decisions. By using Splunk, a “security information and event management solution that enables security teams to quickly detect and respond to internal and external attacks , to simplify threat management while minimizing risk, and safeguard your business” companies can analyze their data and gather new intelligence information  (Splunk, 2020, pg.1). Although Splunk is useful in detecting patterns, it is recommended to use it in conjunction with a security prevention tool. Early detection, rapid response, and collaboration are needed to mitigate today’s advanced threats, which can impose a significant demand on the security team and system infrastructure. With Splunk, reporting, monitoring logs, and security events become easier. Splunk is divided into three parts: Forwarders, Indexers and Search Head. 
+
+Why Splunk? 
+Implementing splunk will empower companies to lower their risk of data loss. Many other reasons why splunk can refer to: 
+Performance: 
+Companies want to see improvement in performance and stability.
+Optimization Check Offering :
+Provides a thorough understanding of the current effectiveness of your splunk investment
+Build a process framework for proactively identifying issues as they arise
+Complexity:
+	Organizations sometimes run into the pitfalls of custom-built deployments, especially when they have grown too rapidly. 
+Costs:
+Companies are seeking ways to reduce total cost if ownership, while fulfilling all of their requirements. 
+Installation
+Being a part of Splunk program requires you to sign up, download their software, and start the free trial. You can get access to their website through this link: https://www.splunk.com/ , and you will see an open dialog window as shown below. 
+
+Figure 1: Splunk Web Banner
+You will need to enter all  needed information, and accept their terms in order to get selected. Once you are a part, you will have to choose to use the software either by downloading it on your machine, or through your cloud. Remember to choose your OS properly in addition for the software to perform. Click the link to learn more about it: https://www.splunk.com/en_us/download/universal-forwarder.html#tabs/linux 
+
+Once the software is downloaded, here comes the installation process. 
+	As shown in the image above, the software comes  compressed. It must be decompressed in order to perform the installation. In centos6 and 7, we use the command “tar -xvf (name file)” for extraction. 
+Note: It is not recommended to install Splunk as a root/admin user because Splunk has the ability to run scripts as scripted inputs and as the result of triggered alert. That is too high a risk to allow it to be run as root. Obviously running as non-root means you'll need to make sure any inputs have proper permissions and/or sudo where required. Here is what to do: 
+Create a secure user account with password for a user splunk: 
+Useradd splunk
+Passwd splunk
+Type the password and confirm
+Give splunk an ownership, and the permission to read, write, and execute.
+Chmod 777 splunk
+Splunk can live in any directory, but for this case; it will be in the /opt directory.   
+
+For 3rd party installations, it is recommend to save that those files into the /opt directory. 
+
+Under the installation you will need to accept the license. You can just type the command: 
+/splunk start --accept-license 
+In case you want to accept the license without prompting, you can type the command /splunk start --no prompt
+Once splunk is installed,  log in with the user and password admin to go to the next step,splunk search processing language (spl).Splunk’s search processing language has helped many companies to rapidly explore massive amounts of machine data to find the needle in the haystack and discover the root cause of the incident. Another component of Splunk are forwarders, which meant to collect datas and forward it to other splunk instances.  It provides reliable, secure data collection from various sources and delivers the data to splunk Enterprise or splunk Cloud for indexing and analysis. There are several types of forwarders, but the most common one is footprint installed on an endpoint. Splunk Forwarders automatically send file-based data of any sort to the splunk indexer. Most commonly, these are logs, but the files can contain any data in any format. Forwarders represent a much more robust solution for data forwarding than raw network feeds with their capabilities for: 
+SSL security
+Data compression
+Configurable buffering 
+Tagging of metadata
+Source
+Source type
+Host 
+The diagram below shows three forwarders that send data to a single receiver, which then indexes the data and makes it available for searching: 
+
+
+The forwarding and receiving capability makes possible all sorts of interesting topologies. You can build environments to handle functions like: 
+Data consolidation 
+Load balancing 
+
+To configure a universal forwarder instance as a gateway forwarder, perform the following steps.
+On the gateway forwarder, run the following command to enable listening:
+/opt/splunkforwarder/bin/splunk enable listen <port> -auth <username>:<password>
+Restart the gateway forwarder.
+To configure another forwarder to send data to the gateway forwarder, run the following command:
+/opt/splunkforwarder/bin/splunk add forward-server <host name or ip address>:<listening port>
+Data routing 
+Universal forwarders cannot route, filter, or transform data because they do not have the frameworks necessary to perform those actions. However, you can use forwarders to filter and route event data to splunk instances. A simple illustration of a forwarder routing data to three indexers follows: 
+
+Remember that you can configure routing only on a heavy forwarder. You may need to identify categories of events and where you would like to route those events. You need to be in the splunk home directory to perform this task. But first you need to edit the Vim by typing the command: vi /etc/system/local/props.conf to add a TRANSFORM-routing .
+For example: 
+[<spec>]
+TRANSFORMS-routing=<transforms_Franck_name>
+In this props.conf Franck:
+<spec> can be:
+<sourcetype>, the source type of an event
+host::<host>, where <host> is the host for an event
+source::<source>, where <source> is the source for an event
+If you have multiple TRANSFORMS attributes, use a unique name for each. For example: "TRANSFORMS-routing1", "TRANSFORMS-routing2", and so on.
+<transforms_Franck_name> must be unique.
+Use the <transforms_Franck_name> specified here when creating an entry in transforms.conf
+Save the file. 
+Edit Vi $SPLUNK_HOME/etc/system/local/transforms.conf to specify target groups and set additional criteria for routing based on event patterns. For example:
+[<transforms_Franck_name>]
+REGEX=<routing_criteria>
+DEST_KEY=_TCP_ROUTING
+FORMAT=<target_group>,<target_group>,....
+In this transforms.conf Franck:
+<transforms_Franck_name> must match the name you defined in props.conf.
+In <routing_criteria>, enter the regular expression rules that determine which events get routed. This line is required. Use "REGEX = ." if you don't need additional filtering beyond the metadata specified in props.conf.
+DEST_KEY should be set to _TCP_ROUTING to send events via TCP. It can also be set to _SYSLOG_ROUTING.
+Set FORMAT to a <target_group> that matches a target group name you defined in outputs.conf. If you specify more than one target group, use commas to separate them. A comma separated list clones events to multiple target groups.
+Splunk doesn't let you install if you do not register. In Order to get qualified, you should fill all required information. Here is the link to register: https://www.splunk.com/ . You can just follow instructions and install manually, or you can go through command lines. For someone who wants to get familiar with CLI, its recommend to install through the terminal by following these command: 
+Create an user splunk by typing the command: adduser splunk
+Add splunk to the splunk group, or if you want to be more elegant for this specific project, you can just create the group Splunk20 for 2020 year by executing the command: groupadd splunk20
+It recommends setting a password for the user splunk by typing the command: passwd splunk, then enter the password. Make sure to remember the password because it's case sensitive. 
+To add splunk to a splunk20 group, the command: useradd -d /opt/splunk - m -g splunk20 splunk
+Now you want to switch to splunk user to extract the file you download from the website. Type the command: su - splunk to jump to splunk home directory, and enter the password you created before. 
+To confirm the version you have chosen when you were downloading splunk, you can type the command: LONG_BIT, and it will show 32 for 32 bits, and 64 for 64 bits. 
+Knowing that the file was previously downloaded as a compressed file, you want to extract before installing it, and the command will be: tar -xvf(name of the file) 
+Now you want to copy the files to the splunk application folder namely /opt/splunk created: cp -rp splunk/* /opt/splunk/
+You need to switch to splunk user, and start running the application by typing the following command:
+Su - splunk 
+Cd bin/
+./splunk start --accept-license
+After following this process, you will successfully have your splunk installed. 
+
+
+
