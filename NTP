@@ -86,10 +86,10 @@ Set date from the command line:
 Set time from the command line:
   # date +%T -s "11:14:00"
 
-Set time and date from the command line
+Set time and date from the command line:
   # date -s "19 APR 2012 11:14:00"
 
-Linux check date from command line
+Check date from command line:
   # date
 
 
