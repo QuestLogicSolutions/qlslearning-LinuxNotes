@@ -1,5 +1,5 @@
 Download an *.rpm package to your jump box from link below:
-https://access.redhat.com/downloads/content/package-browser 
+https://access.redhat.com/downloads/content/package-browser
 Transfer package to your VM using SCP or RSYNC
 
 RPM command to install a package
@@ -15,34 +15,34 @@ rpm -Uvh rpmpackagename.rpm (or linktopackagename.rpm)
 package will update if necessary
 
 RPM command to view configuration files
- 
+
 rpm - qa
 lists all rpm installed packages
- 
+
 rpm -qa | grep “jwhois”
 list jwhois from returned list of installed packages
- 
+
 rpm -qa | sort | less
 lists all rpm installed packages in alphabetical order
- 
+
 rpm -qi jwhois
 displays info about jwhois package
- 
+
 rpm -ql jwhois
 displays all files for jwhois package and their paths
- 
+
 rpm -qf /bin/dmesg
 displays package file is related to
 
-rpm -qd jwhois 
+rpm -qd jwhois
 displays path to documentation file for package
 
-rpm -qc jwhois 
+rpm -qc jwhois
 displays configuration file for the package
 
 
 RPM command to uninstall a package
-rpm -e  jwhois 
+rpm -e  jwhois
 package will remove if necessary
 
 rpm -qa | grep “jwhois”
@@ -53,3 +53,7 @@ locate -i messages
 display files and folders containing the word “messages”
 locate: can not stat () `/var/lib/mlocate/mlocate.db': No such file or directory
 “updatedb” command
+
+
+
+ADDING A NEW LINE!!! 
